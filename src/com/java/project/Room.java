@@ -5,22 +5,19 @@ public class Room {
 	public int toFinishPoint;
 	public int value;
 	public Room tail;
-	int x,y,z;
+	public Vector3 vek;
 	
 	public Room(int x,int y,int z,Room tail) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.vek = new Vector3(x,y,z);
 		this.tail = tail;
 		Calculate();
 		
 	}
 	
 	public Room(int inf) {
-		this.x = inf;
-		this.y = inf;
-		this.z = inf;
+		this.vek = new Vector3(inf,inf,inf);
 		this.tail = null;
+		Calculate();
 	}
 	
 	void DistanceTSP()
@@ -31,13 +28,11 @@ public class Room {
 	
 	public void Calculate()
 	{
-		if(tail!=null)
-		{
-			DistanceTSP();
-			toFinishPoint = x+y+z-3;
-			value = toFinishPoint + toStartPoint;
-		}
+		if(tail!=null) DistanceTSP();
 		else System.out.println("Calculate! Tail not set");	
+		
+		toFinishPoint = vek.Sum();
+		value = toFinishPoint + toStartPoint;
 	}
-
+	
 }
