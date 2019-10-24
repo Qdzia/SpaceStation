@@ -27,57 +27,57 @@ public class PathFinder {
 		
 		ar[0][0][0] = new Room(0);
 		
-		ar[3][3][3] = new Room(3,3,3,null);
+		ar[3][3][3] = new Room(3);
 		
 		
 		LinkedList<Room> list = new LinkedList<Room>();
 		
-		list.add(new Room(2));
+		/*list.add(new Room(2));
 		list.add(new Room(5));
 		list.add(new Room(1));
 		list.add(new Room(1));
-		list.add(new Room(4));
+		list.add(new Room(4));*/
 		
 		current = ar[3][3][3];
-		
 		pos = current.vek;
 		
-		//list.set(0,list.get(2));
 		
-		//int arr[] = {12, 11, 13, 6, 6, 7}; 
-        
-  
         HeapSort ob = new HeapSort(); 
-        ob.sort(list); 
+         
   
-        //System.out.println("Sorted array is"); 
-       printArray(list);
 		
-		/*
-		if(current.toFinishPoint != 0)
+       if(current.toFinishPoint != 0)
 		{
 			for(int i = 0;i<6;i++) 
 			{
 				cor = new Vector3(pos.x+ dir[i].x,pos.y+ dir[i].y,pos.z+ dir[i].z);
 				if(ar[cor.x][cor.y][cor.z]!=null)
 				{
-					if(current.value +1 <ar[cor.x][cor.y][cor.z].value)
+					System.out.println("Exsist");
+					if(current.toStartPoint +1 <ar[cor.x][cor.y][cor.z].toStartPoint)
 					{
 						ar[cor.x][cor.y][cor.z].tail = current;
 						ar[cor.x][cor.y][cor.z].Calculate();
+						System.out.println("Calculate agian");
 					}
 					
 				}
 				else
 				{
 					ar[cor.x][cor.y][cor.z] = new Room(cor.x,cor.y,cor.z,current);
+					System.out.println("new room: " +cor.x +cor.y + cor.z + " Value: " 
+					+ ar[cor.x][cor.y][cor.z].value );
 					
+					list.add(ar[cor.x][cor.y][cor.z]);
 				}
 			}
 			
 		}
 		else System.out.println("I got it!");
-		*/
+		
+       
+       ob.sort(list);
+       printArray(list);
 		
 	}
 	
