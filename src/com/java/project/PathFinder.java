@@ -1,5 +1,7 @@
 package com.java.project;
 
+import java.util.LinkedList;
+
 public class PathFinder {
 
 	
@@ -28,18 +30,28 @@ public class PathFinder {
 		ar[3][3][3] = new Room(3,3,3,null);
 		
 		
+		LinkedList<Room> list = new LinkedList<Room>();
+		
+		list.add(new Room(2));
+		list.add(new Room(5));
+		list.add(new Room(1));
+		list.add(new Room(1));
+		list.add(new Room(4));
+		
 		current = ar[3][3][3];
 		
 		pos = current.vek;
 		
-		int arr[] = {12, 11, 13, 6, 6, 7}; 
+		//list.set(0,list.get(2));
+		
+		//int arr[] = {12, 11, 13, 6, 6, 7}; 
         
   
         HeapSort ob = new HeapSort(); 
-        ob.sort(arr); 
+        ob.sort(list); 
   
-        System.out.println("Sorted array is"); 
-        printArray(arr);
+        //System.out.println("Sorted array is"); 
+       printArray(list);
 		
 		/*
 		if(current.toFinishPoint != 0)
@@ -69,11 +81,11 @@ public class PathFinder {
 		
 	}
 	
-	static void printArray(int arr[]) 
+	static void printArray(LinkedList<Room> list) 
     { 
-        int n = arr.length; 
+        int n = list.size(); 
         for (int i=0; i<n; ++i) 
-            System.out.print(arr[i]+" "); 
+            System.out.print(list.get(i).value+" "); 
         System.out.println(); 
     }
 

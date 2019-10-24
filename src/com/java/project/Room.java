@@ -17,6 +17,7 @@ public class Room {
 	public Room(int inf) {
 		this.vek = new Vector3(inf,inf,inf);
 		this.tail = null;
+		this.toStartPoint = 0;
 		Calculate();
 	}
 	
