@@ -17,8 +17,9 @@ public class Room {
 	public Room(int inf) {
 		this.vek = new Vector3(inf,inf,inf);
 		this.tail = null;
-		this.toStartPoint = inf;
-		Calculate();
+		this.toStartPoint = 0;
+		this.toFinishPoint = vek.Sum();
+		this.value = 100;
 	}
 	
 	void DistanceTSP()

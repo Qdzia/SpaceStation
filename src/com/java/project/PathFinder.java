@@ -11,6 +11,7 @@ public class PathFinder {
 		Room current;
 		Vector3 pos;
 		Vector3 cor;
+		boolean end = true;
 		
 		Vector3[] dir = new Vector3[6];
 		
@@ -23,14 +24,10 @@ public class PathFinder {
 		
 		
 		Room[][][] ar = new Room[size][size][size];
-		
-		
-		ar[0][0][0] = new Room(0);
+		LinkedList<Room> list = new LinkedList<Room>();
 		
 		ar[3][3][3] = new Room(3);
-		
-		
-		LinkedList<Room> list = new LinkedList<Room>();
+		list.add(ar[3][3][3]);
 		
 		/*list.add(new Room(2));
 		list.add(new Room(5));
@@ -39,45 +36,59 @@ public class PathFinder {
 		list.add(new Room(4));*/
 		
 		current = ar[3][3][3];
-		pos = current.vek;
 		
 		
+		int petla = 0;
         HeapSort ob = new HeapSort(); 
-         
-  
-		
+
+	while(end)
+	{
        if(current.toFinishPoint != 0)
 		{
+    	   current = list.get(0);
+    	   pos = current.vek;
+    	   //System.out.println("Wybra³em: " + current.vek.x + current.vek.y + current.vek.z );
+    	   
+    	   
 			for(int i = 0;i<6;i++) 
 			{
 				cor = new Vector3(pos.x+ dir[i].x,pos.y+ dir[i].y,pos.z+ dir[i].z);
+				
 				if(ar[cor.x][cor.y][cor.z]!=null)
 				{
-					System.out.println("Exsist");
+					//System.out.println("Exsist");
 					if(current.toStartPoint +1 <ar[cor.x][cor.y][cor.z].toStartPoint)
 					{
 						ar[cor.x][cor.y][cor.z].tail = current;
 						ar[cor.x][cor.y][cor.z].Calculate();
-						System.out.println("Calculate agian");
+						//System.out.println("Calculate agian");
 					}
 					
 				}
 				else
 				{
 					ar[cor.x][cor.y][cor.z] = new Room(cor.x,cor.y,cor.z,current);
-					System.out.println("new room: " +cor.x +cor.y + cor.z + " Value: " 
-					+ ar[cor.x][cor.y][cor.z].value );
+					//System.out.println("new room: " +cor.x +cor.y + cor.z + " Value: " 
+					//+ ar[cor.x][cor.y][cor.z].value );
+					System.out.println("new room: " +cor.x +cor.y + cor.z + " to start: " 
+					+ ar[cor.x][cor.y][cor.z].toFinishPoint );
 					
 					list.add(ar[cor.x][cor.y][cor.z]);
 				}
 			}
 			
+			
+			ob.sort(list);
+		    //printArray(list);
+			
+			
 		}
-		else System.out.println("I got it!");
+		else end= false;
 		
-       
-       ob.sort(list);
-       printArray(list);
+       petla++;
+       if(petla > 15) end= false;
+	} 
+			System.out.println("I got it!");
 		
 	}
 	
