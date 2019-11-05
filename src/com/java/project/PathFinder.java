@@ -10,7 +10,7 @@ public class PathFinder {
 		int size = 5;
 		Room current;
 		Vector3 pos;
-		Vector3 cor;
+		Vector3 AddVek;
 		boolean end = true;
 		
 		Vector3[] dir = new Vector3[6];
@@ -22,82 +22,102 @@ public class PathFinder {
 		dir[4]= new Vector3(0,-1,0);
 		dir[5]= new Vector3(0,0,-1);
 		
+	
+		LinkedList<Room> open = new LinkedList<Room>();
+		LinkedList<Room> close = new LinkedList<Room>();
 		
-		Room[][][] ar = new Room[size][size][size];
-		LinkedList<Room> list = new LinkedList<Room>();
-		
-		ar[3][3][3] = new Room(3);
-		list.add(ar[3][3][3]);
-		
-		/*list.add(new Room(2));
-		list.add(new Room(5));
-		list.add(new Room(1));
-		list.add(new Room(1));
-		list.add(new Room(4));*/
-		
-		current = ar[3][3][3];
-		
+		Room ini = new Room(3);
+		Room node = new Room(4,4,0,ini);
+		node.isNode = true;
+		current = node;
+		open.add(node);
+
 		
 		int petla = 0;
         HeapSort ob = new HeapSort(); 
 
 	while(end)
 	{
-       if(current.toFinishPoint != 0)
+		current.Calculate();
+		
+		
+		
+       if(open.get(0).value > 0)
 		{
-    	   current = list.get(0);
-    	   pos = current.vek;
-    	   //System.out.println("Wybra³em: " + current.vek.x + current.vek.y + current.vek.z );
+    	  //Getting rid of evaluated arguments 
+    	   
+    	   do {
+    		   if(current.evaluated) {
+        		   close.add(current);
+        		   open.remove(0);
+        		   ob.sort(open);
+        		   
+        	   }
+        	   else {
+        		   current = open.get(0);
+        	   }
+    		   current = open.get(0);
+    		   
+    		   
+           } while (current.evaluated);
+    	   
+    	   current.evaluated = true;
     	   
     	   
-			for(int i = 0;i<6;i++) 
+    	   System.out.println("Current: " + current.vek.x + current.vek.y + current.vek.z);
+    	   System.out.println("valuea: " + current.value);
+    	   
+    	   	pos = current.vek;
+    	  
+			for(int i = 3;i<5;i++) 
 			{
-				cor = new Vector3(pos.x+ dir[i].x,pos.y+ dir[i].y,pos.z+ dir[i].z);
+				pos = pos.AddVector(pos, dir[i]);
 				
-				if(ar[cor.x][cor.y][cor.z]!=null)
-				{
-					//System.out.println("Exsist");
-					if(current.toStartPoint +1 <ar[cor.x][cor.y][cor.z].toStartPoint)
-					{
-						ar[cor.x][cor.y][cor.z].tail = current;
-						ar[cor.x][cor.y][cor.z].Calculate();
-						//System.out.println("Calculate agian");
-					}
-					
+				System.out.println("Position: " + current.vek.x + current.vek.y + current.vek.z);
+				//System.out.println("Position: " + pos.x + pos.y + pos.z);
+				
+				if(pos.CheckBorders(pos,5)) {
+					open.add(new Room(pos.x,pos.y,pos.z,current));
+					System.out.println("Dodano:   " + pos.x + pos.y + pos.z);
 				}
-				else
-				{
-					ar[cor.x][cor.y][cor.z] = new Room(cor.x,cor.y,cor.z,current);
-					//System.out.println("new room: " +cor.x +cor.y + cor.z + " Value: " 
-					//+ ar[cor.x][cor.y][cor.z].value );
-					System.out.println("new room: " +cor.x +cor.y + cor.z + " to start: " 
-					+ ar[cor.x][cor.y][cor.z].toFinishPoint );
-					
-					list.add(ar[cor.x][cor.y][cor.z]);
-				}
+				
+				pos = pos.SubVector(pos, dir[i]);
 			}
+				
+				
+			ob.sort(open);
+			printArray(open);
 			
-			
-			ob.sort(list);
-		    //printArray(list);
 			
 			
 		}
-		else end= false;
-		
-       petla++;
-       if(petla > 15) end= false;
+       	else
+       	{
+    	   end=false;
+    	   System.out.println("Got it");
+       	}
+       
+       
+       	petla++;
+       	if(petla > 15) end= false;
+       	
+       	System.out.println("========================= " + petla);
 	} 
-			System.out.println("I got it!");
+			
+		System.out.println("Something went wrong");
 		
 	}
 	
+//Printing a list
 	static void printArray(LinkedList<Room> list) 
     { 
         int n = list.size(); 
         for (int i=0; i<n; ++i) 
-            System.out.print(list.get(i).value+" "); 
+            System.out.print(list.get(i).toFinishPoint+" "); 
         System.out.println(); 
     }
+	
 
+//end
 }
+
