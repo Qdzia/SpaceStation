@@ -10,7 +10,6 @@ public class PathFinder {
 		int size = 5;
 		Room current;
 		Vector3 pos;
-		Vector3 AddVek;
 		boolean end = true;
 		
 		Vector3[] dir = new Vector3[6];
@@ -27,7 +26,7 @@ public class PathFinder {
 		LinkedList<Room> close = new LinkedList<Room>();
 		
 		Room ini = new Room(3);
-		Room node = new Room(4,4,0,ini);
+		Room node = new Room(9,5,0,ini);
 		node.isNode = true;
 		current = node;
 		open.add(node);
@@ -38,35 +37,27 @@ public class PathFinder {
 
 	while(end)
 	{
-		current.Calculate();
-		
-		
-		
+	//Checking the shortest way
        if(open.get(0).value > 0)
 		{
     	  //Getting rid of evaluated arguments 
-    	   
     	   do {
-    		   if(current.evaluated) {
+    		   if(open.get(0).evaluated) 
+    		   {
         		   close.add(current);
         		   open.remove(0);
         		   ob.sort(open);
-        		   
         	   }
-        	   else {
-        		   current = open.get(0);
-        	   }
+        	   
     		   current = open.get(0);
     		   
     		   
-           } while (current.evaluated);
+           	} while (current.evaluated);
     	   
     	   current.evaluated = true;
     	   
     	   
-    	   System.out.println("Current: " + current.vek.x + current.vek.y + current.vek.z);
-    	   System.out.println("valuea: " + current.value);
-    	   
+    	   //Checking neighbor fields
     	   	pos = current.vek;
     	  
 			for(int i = 3;i<5;i++) 
@@ -74,22 +65,22 @@ public class PathFinder {
 				pos = pos.AddVector(pos, dir[i]);
 				
 				System.out.println("Position: " + current.vek.x + current.vek.y + current.vek.z);
-				//System.out.println("Position: " + pos.x + pos.y + pos.z);
 				
-				if(pos.CheckBorders(pos,5)) {
+				if(pos.CheckBorders(pos, 10)) 
+				{
 					open.add(new Room(pos.x,pos.y,pos.z,current));
 					System.out.println("Dodano:   " + pos.x + pos.y + pos.z);
+					
 				}
 				
 				pos = pos.SubVector(pos, dir[i]);
 			}
-				
+			
+			
 				
 			ob.sort(open);
 			printArray(open);
-			
-			
-			
+		
 		}
        	else
        	{
@@ -97,16 +88,17 @@ public class PathFinder {
     	   System.out.println("Got it");
        	}
        
-       
+       //Security
        	petla++;
-       	if(petla > 15) end= false;
+       	if(petla > 20) end= false;
        	
        	System.out.println("========================= " + petla);
 	} 
 			
-		System.out.println("Something went wrong");
+		System.out.println("End of Program");
 		
-	}
+//end main		
+}
 	
 //Printing a list
 	static void printArray(LinkedList<Room> list) 
@@ -118,6 +110,6 @@ public class PathFinder {
     }
 	
 
-//end
+//end class
 }
 
