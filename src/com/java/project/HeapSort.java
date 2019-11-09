@@ -35,13 +35,15 @@ public class HeapSort {
 	        int r = 2*i + 2;  // right = 2*i + 2 
 	  
 	        // If left child is larger than root 
-	        if (l < n && list.get(l).value > list.get(largest).value)
+	        if (l < n && (list.get(l).value > list.get(largest).value 
+	        		|| list.get(l).value == list.get(largest).value &&  list.get(l).toFinishPoint > list.get(largest).toFinishPoint))
 	            largest = l; 
-	  
+	      
 	        // If right child is larger than largest so far 
-	        if (r < n && list.get(r).value > list.get(largest).value) 
-	            largest = r; 
-	  
+		        if (r < n && (list.get(r).value > list.get(largest).value 
+		        		|| list.get(r).value == list.get(largest).value && list.get(r).toFinishPoint > list.get(largest).toFinishPoint))
+		            largest = r; 
+	        
 	        // If largest is not root 
 	        if (largest != i) 
 	        { 

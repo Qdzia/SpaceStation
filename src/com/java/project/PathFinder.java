@@ -7,7 +7,7 @@ public class PathFinder {
 	
 	public static void main(String[] args) {
 	
-		int size = 5;
+		ReadFile r = new ReadFile();
 		Room current;
 		Vector3 pos;
 		boolean end = true;
@@ -16,29 +16,31 @@ public class PathFinder {
 		
 		dir[0]= new Vector3(1,0,0);
 		dir[1]= new Vector3(0,1,0);
-		dir[2]= new Vector3(0,0,1);
-		dir[3]= new Vector3(-1,0,0);
-		dir[4]= new Vector3(0,-1,0);
-		dir[5]= new Vector3(0,0,-1);
-		
+		dir[2]= new Vector3(-1,0,0);
+		dir[3]= new Vector3(0,-1,0);
+		dir[4]= new Vector3(0,0,-1);
+		dir[5]= new Vector3(0,0,1);
 	
 		LinkedList<Room> open = new LinkedList<Room>();
 		LinkedList<Room> close = new LinkedList<Room>();
 		
 		Room ini = new Room(3);
-		Room node = new Room(9,5,0,ini);
+		Room node = new Room(3,5,1,ini);
 		node.isNode = true;
 		current = node;
 		open.add(node);
 
+		r.openFile();
+		r.Read();
+		r.CloseFile();
 		
 		int petla = 0;
         HeapSort ob = new HeapSort(); 
-
+        end = false;
 	while(end)
 	{
 	//Checking the shortest way
-       if(open.get(0).value > 0)
+       if(open.get(0).vek.Sum() > 0)
 		{
     	  //Getting rid of evaluated arguments 
     	   do {
@@ -55,12 +57,12 @@ public class PathFinder {
            	} while (current.evaluated);
     	   
     	   current.evaluated = true;
-    	   
+    	   System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
     	   
     	   //Checking neighbor fields
     	   	pos = current.vek;
     	  
-			for(int i = 3;i<5;i++) 
+			for(int i = 0;i<6;i++) 
 			{
 				pos = pos.AddVector(pos, dir[i]);
 				
@@ -105,8 +107,13 @@ public class PathFinder {
     { 
         int n = list.size(); 
         for (int i=0; i<n; ++i) 
+            System.out.print(list.get(i).value+" "); 
+        
+        System.out.println();
+        
+        for (int i=0; i<n; ++i) 
             System.out.print(list.get(i).toFinishPoint+" "); 
-        System.out.println(); 
+        System.out.println();
     }
 	
 

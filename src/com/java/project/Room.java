@@ -20,7 +20,7 @@ public class Room {
 	public Room(int inf) {
 		this.vek = new Vector3(inf,inf,inf);
 		this.tail = null;
-		this.toStartPoint = 0;
+		this.toStartPoint = -1;
 		this.toFinishPoint = vek.Sum();
 		this.evaluated = false;
 		this.value = 100;
@@ -38,7 +38,7 @@ public class Room {
 		else System.out.println("Calculate! Tail not set");	
 		
 		toFinishPoint = vek.Sum();
-		value = toFinishPoint;
+		value = toFinishPoint + toStartPoint;
 	}
 	
 }
