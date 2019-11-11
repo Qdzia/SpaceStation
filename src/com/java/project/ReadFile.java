@@ -20,12 +20,17 @@ public class ReadFile {
 	
 	public void Read() 
 	{
+		ConvertData converter = new ConvertData();
+		
 		while(x.hasNext()) 
 		{
 			String a = x.next();
 			String b = x.next();
 			
-			System.out.printf("%s %s \n", a,b);
+			converter.ConvertToNumbers(a);
+			System.out.println("   ");
+			converter.ConvertToNumbers(b);
+			System.out.println("\n");
 		}
 		
 	}
