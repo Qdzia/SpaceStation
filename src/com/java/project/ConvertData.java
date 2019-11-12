@@ -2,89 +2,76 @@ package com.java.project;
 
 public class ConvertData {
 
-	public void ConvertToNumbers(String s)
+	public Vector3 ConvertToNumbers(String s)
 	{
-		StringBuilder tmp = new StringBuilder("");
-		int stage = 0;
+		//StringBuilder tmp = new StringBuilder("");
+		String tmp = "";
+		int limit = 0;
 		StringBuilder sB = new StringBuilder(s);
 		Vector3 cor = new Vector3(0,0,0);
-		
+		int min = 64;
+		int max = 91;
+		int stage = 0;
 		
 		for(int i=0;i<s.length();i++)
 		{
 			
-			/*if(stage==1) 
+			if((int)sB.charAt(i) > min && (int)sB.charAt(i) < max ) 
 			{
-				if((int)sB.charAt(i) > 64 && (int)sB.charAt(i) < 91) 
-				{
-					System.out.print("x");
-				}
+				
+				tmp = addChar(tmp,sB.charAt(i));
+				limit++;
+			}
+			else if(limit==0) {
+				System.out.println("Nie uda³o siê wczytaæ liczb, sprawdz ich poprawnoœæ");
+				return new Vector3(0,0,0);
 			}
 			else 
 			{
-				
-				stage=2;
-				cor.z = 0;
-				
-			}	
-			
-			if(stage==2) 
-			{
-				if((int)sB.charAt(i) > 96 && (int)sB.charAt(i) < 123)
-				{
-					cor.y = (int)sB.charAt(i) - 97;
-				}
-			}
-			else 
-			{
-				stage=2;
-				
-			} 
-			
-			if(stage==3) 
-			{
-				if((int)sB.charAt(i) > 47 && (int)sB.charAt(i) < 58)
-				{
-					tmp.append(sB.charAt(i));
-				}
-			}
-			else 
-			{
-				String ss = tmp.toString();
-				System.out.print(ss);
-				cor.x =Integer.parseInt(ss);
-				
-			} */
-			
-			if((int)sB.charAt(i) > 64 && (int)sB.charAt(i) < 91 && stage==1) 
-			{
-				System.out.print("x");
-			}else if((int)sB.charAt(i) > 96 && (int)sB.charAt(i) < 123 && stage==2) stage=2;
-			else System.out.print("error");
-			
-			if((int)sB.charAt(i) > 96 && (int)sB.charAt(i) < 123 && stage==2)
-			{
-				cor.y = (int)sB.charAt(i) - 96;
-			}else if((int)sB.charAt(i) > 47 && (int)sB.charAt(i) < 58 && stage==3) stage=3;
-			
-			if((int)sB.charAt(i) > 47 && (int)sB.charAt(i) < 58 && stage==3)
-			{
-				tmp.append(sB.charAt(i));
+				System.out.println(StrToInt(tmp,stage) + "  ");
+				if(stage==0) {max =123; min = 96; stage++;}
+				else if(stage==1) {max =58; min = 47; stage++;}
+				else System.out.println("B³ad odczytu");
+				limit=0;
+				i--;
 			}
 			
 			
-			//System.out.println("\n\n====Nieprawidlowe dane wejsciowe=== \n");	
+			
 			
 		}
 		
 		
-		String ss = tmp.toString();
-		cor.x =Integer.parseInt(ss);
+		//String ss = tmp.toString();
+		//cor.x =Integer.parseInt(ss);
 		
+		return cor;
 		
-		System.out.println("Vector eql: " + cor.x + "  " + cor.y + "  " + cor.z);	
+		//System.out.println("Vector eql: " + cor.x + "  " + cor.y + "  " + cor.z);	
 	}
 	
+	public int StrToInt(String s,int stage)
+	{
+		if(stage == 2) return Integer.parseInt(s);
+		if(stage == 1) {
+			
+			StringBuilder tmp = new StringBuilder(s);
+			return (int)tmp.charAt(0)-96;
+		}
+		if(stage == 0) return 8;
+		
+		System.out.println("B³ad conversji");
+		return 999;
+		
+	}
+	
+	public String addChar(String str, char ch) {
+		System.out.println(str + "\n");
+		int position = str.length();
+	    StringBuilder sb = new StringBuilder(str);
+	    sb.insert(position, ch);
+	    return sb.toString();
+	}
 		
 }
 
