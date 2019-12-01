@@ -29,10 +29,11 @@ public class Vector3 {
 	
 	Vector3 AddVector(Vector3 first, Vector3 second)
 	{
-		first.x = first.x + second.x;
-		first.y = first.y + second.y;
-		first.z = first.z + second.z;
-		return first;
+		Vector3 sum = new Vector3(0,0,0);
+		sum.x = first.x + second.x;
+		sum.y = first.y + second.y;
+		sum.z = first.z + second.z;
+		return sum;
 		
 	}
 	
@@ -47,11 +48,26 @@ public class Vector3 {
 	
 	Vector3 SubVector(Vector3 first, Vector3 second)
 	{
-		first.x = first.x - second.x;
-		first.y = first.y - second.y;
-		first.z = first.z - second.z;
-		return first;
+		Vector3 div = new Vector3(0,0,0);
+		div.x = first.x - second.x;
+		div.y = first.y - second.y;
+		div.z = first.z - second.z;
+		return div;
 		
+	}
+	
+	void Multiply(int n)
+	{
+		x *=n;
+		y *=n;
+		z *=n;
+	}
+	
+	void Divide(int n)
+	{
+		x /=n;
+		y /=n;
+		z /=n;
 	}
 
 }

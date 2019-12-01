@@ -30,9 +30,13 @@ public class PathFinder {
 		current = node;
 		open.add(node);
 
-		r.openFile();
-		r.Read();
-		r.CloseFile();
+		Grid grid = Grid.getInstance();
+		grid.CreateGrid();
+		grid.CheckPlace(new Vector3(2,2,0),new Vector3(2,1,0));
+		
+	}
+}
+		/*
 		
 		int petla = 0;
         HeapSort ob = new HeapSort(); 
@@ -119,4 +123,4 @@ public class PathFinder {
 
 //end class
 }
-
+*/
