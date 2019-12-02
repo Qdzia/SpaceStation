@@ -1,77 +1,58 @@
 package com.java.project;
 
-public class ConvertData {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-	public Vector3 ConvertToNumbers(String s)
+public class ConvertData {
+	
+	
+
+	public Vector3 CheckPattern(String s)
 	{
-		//StringBuilder tmp = new StringBuilder("");
-		String tmp = "";
-		int limit = 0;
-		StringBuilder sB = new StringBuilder(s);
-		Vector3 cor = new Vector3(0,0,0);
-		int min = 64;
-		int max = 91;
-		int stage = 0;
+		RomanToNumber romeConventer = new RomanToNumber();
+		Vector3 cor = new Vector3(-1,-1,-1);
 		
-		for(int i=0;i<s.length();i++)
+		//Patterns of input
+		Pattern pattern = Pattern.compile("[VILXC]+[a-z][1-9]+");
+		Pattern rome = Pattern.compile("[VILXC]+");
+		Pattern letter = Pattern.compile("[a-z]");
+		Pattern number = Pattern.compile("[1-9]+");
+		
+		String str="";
+		Matcher m = pattern.matcher(s);
+		
+		//Check order of pattern
+		if(m.matches())
 		{
+			//Convert rome numbers
+			m = rome.matcher(s);
+			while (m.find())  str = m.group(0);   
 			
-			if((int)sB.charAt(i) > min && (int)sB.charAt(i) < max ) 
-			{
-				
-				tmp = addChar(tmp,sB.charAt(i));
-				limit++;
-			}
-			else if(limit==0) {
-				System.out.println("Nie uda³o siê wczytaæ liczb, sprawdz ich poprawnoœæ");
-				return new Vector3(0,0,0);
-			}
-			else 
-			{
-				System.out.println(StrToInt(tmp,stage) + "  ");
-				if(stage==0) {max =123; min = 96; stage++;}
-				else if(stage==1) {max =58; min = 47; stage++;}
-				else System.out.println("B³ad odczytu");
-				limit=0;
-				i--;
-			}
+			cor.z = romeConventer.romanToDecimal(str);
 			
 			
+			//Convert letters numbers
+			m = letter.matcher(s);
+			while (m.find()) str = m.group(0); 
+			
+			char c=str.charAt(0);
+			cor.y = (int) c - 96;
 			
 			
+			//Convert numbers to integer
+			m = number.matcher(s);
+			while (m.find()) str = m.group(0);
+			
+			cor.x = Integer.parseInt(str);
+			
+			
+			return cor;
 		}
+		else System.out.println("B³¹d odczytu");
 		
-		
-		//String ss = tmp.toString();
-		//cor.x =Integer.parseInt(ss);
-		
-		return cor;
-		
-		//System.out.println("Vector eql: " + cor.x + "  " + cor.y + "  " + cor.z);	
-	}
-	
-	public int StrToInt(String s,int stage)
-	{
-		if(stage == 2) return Integer.parseInt(s);
-		if(stage == 1) {
-			
-			StringBuilder tmp = new StringBuilder(s);
-			return (int)tmp.charAt(0)-96;
-		}
-		if(stage == 0) return 8;
-		
-		System.out.println("B³ad conversji");
-		return 999;
+		return null;
 		
 	}
 	
-	public String addChar(String str, char ch) {
-		System.out.println(str + "\n");
-		int position = str.length();
-	    StringBuilder sb = new StringBuilder(str);
-	    sb.insert(position, ch);
-	    return sb.toString();
-	}
-		
 }
 

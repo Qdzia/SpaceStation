@@ -27,10 +27,10 @@ public class ReadFile {
 			String a = x.next();
 			String b = x.next();
 			
-			converter.ConvertToNumbers(a);
-			System.out.println("   ");
-			converter.ConvertToNumbers(b);
-			System.out.println("\n");
+			Vector3 v1 = converter.CheckPattern(a);
+			Vector3 v2 = converter.CheckPattern(b);
+			
+			System.out.println("v1: " + v1.x + v1.y + v1.z + " v2: " + v2.x + v2.y + v2.z);
 		}
 		
 	}

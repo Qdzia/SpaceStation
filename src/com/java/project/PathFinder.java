@@ -31,8 +31,12 @@ public class PathFinder {
 		open.add(node);
 
 		Grid grid = Grid.getInstance();
+		
+		//r.openFile();
+		//r.Read();
+		//r.CloseFile();
 		grid.CreateGrid();
-		grid.CheckPlace(new Vector3(2,2,0),new Vector3(2,1,0));
+		grid.CheckPlace(new Vector3(1,1,0),new Vector3(2,1,0));
 		
 	}
 }

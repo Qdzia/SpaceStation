@@ -69,7 +69,7 @@ public class Grid {
 	    	for(int k=0;k<size;k++) {
 	    		for(int j=0;j<size;j++) {
 	    			for(int i =0;i<size;i++) {
-	    				if(grid[i][j][k]==true) System.out.print("0 ");
+	    				if(grid[i][j][k]==true) System.out.print("0 "); 
 	    				else System.out.print("# ");
 	    			
 	    			}
@@ -78,6 +78,8 @@ public class Grid {
 	    		
 	    		System.out.println("===============================================[ "+ k + " ]====");
 	    	}
+	    	
+	    	System.out.println("");
 	    }
 	    
 	    public void CheckPlace(Vector3 vek1,Vector3 vek2)
@@ -85,9 +87,13 @@ public class Grid {
 	    	vek1.Multiply(2);
 	    	vek2.Multiply(2);
 	    	
+	    	
 	    	System.out.println("");
 	    	System.out.println("vektor1 = " +vek1.x + vek1.y + vek1.z);
 	    	System.out.println("vektor2 = " +vek2.x + vek2.y + vek2.z);
+	    	
+	    	grid[vek1.x][vek1.y][vek1.z+1] = false;
+	    	grid[vek2.x][vek2.y][vek2.z+1] = false;
 	    	
 	    	Vector3 gate = vek2.SubVector(vek2,vek1);
 	    	
@@ -107,6 +113,12 @@ public class Grid {
 	    	
 	    }
 	    
+	    
+	    void ToGridPosition(Vector3 vek) 
+	    {
+	    	
+	    	
+	    }
 	/*
 	File file = new File("DoorList.txt");
     Scanner in = new Scanner(file);

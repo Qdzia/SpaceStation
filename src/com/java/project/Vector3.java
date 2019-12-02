@@ -69,5 +69,19 @@ public class Vector3 {
 		y /=n;
 		z /=n;
 	}
+	
+	void Minus(int n)
+	{
+		x -=n;
+		y -=n;
+		z -=n;
+	}
+	
+	void Plus(int n)
+	{
+		x +=n;
+		y +=n;
+		z +=n;
+	}
 
 }
