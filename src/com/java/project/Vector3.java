@@ -5,6 +5,7 @@ public class Vector3 {
 	public int x ,y, z;
 	
 	
+	
 	Vector3(int x,int y,int z)
 	{
 		this.x = x;
@@ -12,6 +13,7 @@ public class Vector3 {
 		this.z = z;
 		
 	}
+
 	
 	int Sum()
 	{

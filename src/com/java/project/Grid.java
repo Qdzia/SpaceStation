@@ -1,8 +1,6 @@
 package com.java.project;
 
 
-
-
 public class Grid {
 	
 	//Singleton
@@ -19,7 +17,8 @@ public class Grid {
 	    }
 	   
 	  //Rest of code
-	    int size = 2*5+1;
+	    int gridSize = 5;
+	    int size = 2*gridSize+1;
     	boolean[][][] grid = new boolean[size][size][size];
     	
     	
@@ -69,7 +68,7 @@ public class Grid {
 	    	for(int k=0;k<size;k++) {
 	    		for(int j=0;j<size;j++) {
 	    			for(int i =0;i<size;i++) {
-	    				if(grid[i][j][k]==true) System.out.print("0 "); 
+	    				if(grid[i][j][k]==true) System.out.print("  "); 
 	    				else System.out.print("# ");
 	    			
 	    			}
@@ -82,62 +81,40 @@ public class Grid {
 	    	System.out.println("");
 	    }
 	    
-	    public void CheckPlace(Vector3 vek1,Vector3 vek2)
+	    public boolean CheckPlace(Vector3 vek1,Vector3 vek2)
 	    {
+	    	//convert to grid coordinate
 	    	vek1.Multiply(2);
 	    	vek2.Multiply(2);
-	    	
-	    	
-	    	System.out.println("");
-	    	System.out.println("vektor1 = " +vek1.x + vek1.y + vek1.z);
-	    	System.out.println("vektor2 = " +vek2.x + vek2.y + vek2.z);
-	    	
-	    	grid[vek1.x][vek1.y][vek1.z+1] = false;
-	    	grid[vek2.x][vek2.y][vek2.z+1] = false;
+	    	vek1.Minus(1);
+	    	vek2.Minus(1);
 	    	
 	    	Vector3 gate = vek2.SubVector(vek2,vek1);
 	    	
+	    	//Calculate gate coordinate
 	    	int sum = gate.Sum();
+	    	
 	    	if(sum==2 ||sum ==-2) 
 	    	{
 	    		if(gate.x!=0) vek1.x+=sum/2;
-	    		if(gate.y!=0) vek1.y+=sum/2;
-	    		if(gate.z!=0) vek1.z+=sum/2;
-	    			
-	    		System.out.println("polozenie = " +vek1.x  + vek1.y + vek1.z);
+	    		else if(gate.y!=0) vek1.y+=sum/2;
+	    		else if(gate.z!=0) vek1.z+=sum/2;
 	    	}
 	    	
-	    	grid[vek1.x][vek1.y][vek1.z+1] = false;
-	    	
-	    	DrawGrid();
+	    	return grid[vek1.x][vek1.y][vek1.z+2];
 	    	
 	    }
 	    
-	    
-	    void ToGridPosition(Vector3 vek) 
+	    public boolean CheckBorders(Vector3 current,Vector3 vek)
 	    {
+	    	if(vek.x>gridSize || vek.x<1) return false;
+	    	if(vek.y>gridSize || vek.y<1) return false;
+	    	if(vek.z>gridSize || vek.z<1) return false;
 	    	
-	    	
+	    	if(!CheckPlace(current,vek)) return false;
+	    		
+	    	return true;
 	    }
-	/*
-	File file = new File("DoorList.txt");
-    Scanner in = new Scanner(file);
-    
-	int size = 0;
-	File blackList;
-	
-	
-	public Grid(int size,String closeDoor) 
-	{
-		Cell[] grid = new Cell[size];
-	}
 
-	void ReadDoorList() 
-	{
-		
 
-        String zdanie = in.nextLine();
-        System.out.println(zdanie);
-	}	
-	*/
 }

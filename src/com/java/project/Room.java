@@ -6,13 +6,11 @@ public class Room {
 	public int value;
 	public Room tail;
 	public Vector3 vek;
-	public boolean evaluated;
-	public boolean isNode;
+	
 	
 	public Room(int x,int y,int z,Room tail) {
 		this.vek = new Vector3(x,y,z);
 		this.tail = tail;
-		this.evaluated = false;
 		Calculate();
 		
 	}
@@ -22,7 +20,6 @@ public class Room {
 		this.tail = null;
 		this.toStartPoint = -1;
 		this.toFinishPoint = vek.Sum();
-		this.evaluated = false;
 		this.value = 100;
 	}
 	
