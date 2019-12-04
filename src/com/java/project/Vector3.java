@@ -20,7 +20,7 @@ public class Vector3 {
 		return x+y+z;
 	}
 	
-	boolean CheckBorders(Vector3 vek,int size)
+	public boolean CheckBorders(Vector3 vek,int size)
 	{
 		
 		if(vek.x <0 || vek.x>size) return false;
@@ -29,17 +29,23 @@ public class Vector3 {
 		return true;
 	}
 	
-	Vector3 AddVector(Vector3 first, Vector3 second)
+	public Vector3 AddVector(Vector3 first, Vector3 second)
 	{
-		Vector3 sum = new Vector3(0,0,0);
-		sum.x = first.x + second.x;
-		sum.y = first.y + second.y;
-		sum.z = first.z + second.z;
-		return sum;
-		
+		first.x += second.x;
+		first.y += second.y;
+		first.z += second.z;
+		return first;
+	}
+
+	public Vector3 SubVector(Vector3 first, Vector3 second)
+	{
+		first.x -= second.x;
+		first.y -= second.y;
+		first.z -= second.z;
+		return first;
 	}
 	
-	Vector3 EqlVector(Vector3 first, Vector3 second)
+	public Vector3 EqlVector(Vector3 first, Vector3 second)
 	{
 		first.x = second.x;
 		first.y = second.y;
@@ -48,42 +54,39 @@ public class Vector3 {
 		
 	}
 	
-	Vector3 SubVector(Vector3 first, Vector3 second)
-	{
-		Vector3 div = new Vector3(0,0,0);
-		div.x = first.x - second.x;
-		div.y = first.y - second.y;
-		div.z = first.z - second.z;
-		return div;
-		
-	}
-	
-	void Multiply(int n)
+	public void Multiply(int n)
 	{
 		x *=n;
 		y *=n;
 		z *=n;
 	}
 	
-	void Divide(int n)
+	public void Divide(int n)
 	{
 		x /=n;
 		y /=n;
 		z /=n;
 	}
 	
-	void Minus(int n)
+	public void Minus(int n)
 	{
 		x -=n;
 		y -=n;
 		z -=n;
 	}
 	
-	void Plus(int n)
+	public void Plus(int n)
 	{
 		x +=n;
 		y +=n;
 		z +=n;
 	}
+	
+	public boolean Equl(Vector3 vek)
+	{
+		if(this.x == vek.x && this.y == vek.y && this.z == vek.z) return true;
+		else return false;
+	}
+	
 
 }

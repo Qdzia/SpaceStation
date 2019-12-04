@@ -9,6 +9,11 @@ public class PathFinder {
 	
 		ReadFile r = new ReadFile();
 		Grid grid = Grid.getInstance();
+		Seeker seeker = new Seeker();
+		grid.CreateGrid();
+		
+		
+		seeker.SeekerLoop();
 		
 		//r.openFile();
 		//r.Read();

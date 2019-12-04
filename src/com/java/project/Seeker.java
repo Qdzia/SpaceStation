@@ -9,6 +9,7 @@ public class Seeker {
 	
 	HeapSort ob = new HeapSort();
 	Grid grid = Grid.getInstance();
+	Vector3 cal = new Vector3(0,0,0);
 	
 	public void SeekerLoop()
 	{
@@ -24,7 +25,7 @@ public class Seeker {
 		
 		//Add node to open
 		Room ini = new Room(3);
-		Room node = new Room(3,5,1,ini);
+		Room node = new Room(3,3,3,ini);
 		open.add(node);
 		Room target = new Room(1,1,1,ini);
 		
@@ -32,6 +33,8 @@ public class Seeker {
 		Room current = node;
 		Vector3 pos;
 		
+		grid.grid[1][1][4] = false;
+		grid.grid[1][2][3] = false;
 		
 		//security
 		int petla = 0;    
@@ -43,24 +46,27 @@ public class Seeker {
 			open.remove(0);
 			close.add(current);
 			ob.sort(open);
-		
+			grid.AddRoom(current.vek);
 			
 	    	   
 	    	//Checking neighbor fields
-		    pos = current.vek;
-		    	  
+			pos = new Vector3(0,0,0);
+		    pos = pos.EqlVector(pos,  current.vek);
+		    
+		    System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
+		    
 			for(int i = 0;i<6;i++) 
 			{
-				pos = pos.AddVector(pos, dir[i]);
-						
-				System.out.println("Position: " + current.vek.x + current.vek.y + current.vek.z);
+				pos = cal.AddVector(pos, dir[i]);
+				
+				System.out.println("Position: " + pos.x + pos.y + pos.z);
 						
 				//Check is valid or is in close list
-				if( !(isInList(pos,close) || grid.CheckBorders(current.vek,pos)) )
+				if( grid.CheckBorders(current.vek,pos) && grid.isRoom(pos) )
 				{
 					//check if in open list, if not create if yes checks shortest way
 					if(isInList(pos,open))
-					{
+					{			
 								int num = getRoomOfVec(pos);
 								if(open.get(num).toStartPoint > current.toStartPoint+1) 
 									open.get(num).tail = current;
@@ -70,17 +76,16 @@ public class Seeker {
 						open.add(new Room(pos.x,pos.y,pos.z,current));
 						System.out.println("Dodano:   " + pos.x + pos.y + pos.z);
 					}
-				}
-						
-				pos = pos.SubVector(pos, dir[i]);
+				}		
+				pos = cal.SubVector(pos, dir[i]);
 			}
 				
 				
-					
+			if(current.vek.x == target.vek.x && current.vek.y == target.vek.y && current.vek.z == target.vek.z) end= false;		
 			ob.sort(open);
 			printArray(open);
 			petla++;
-		    if(petla > 20) end= false;
+		    if(petla > 27) end= false;
 		    System.out.println("========================= " + petla);
 			
 		}
@@ -100,7 +105,7 @@ public class Seeker {
         System.out.println();
         
         for (int i=0; i<n; ++i) 
-            System.out.print(list.get(i).toFinishPoint+" "); 
+            System.out.print(list.get(i).toFinishPoint+"  "); 
         System.out.println();
     }
 	
@@ -111,6 +116,7 @@ public class Seeker {
 		    if(room.vek.x == vek.x && room.vek.y == vek.y && room.vek.z == vek.z)
 			    return true;
 		}
+		System.out.println("Not in list");
 		return false;
 	}
 	

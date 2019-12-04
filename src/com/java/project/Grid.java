@@ -81,8 +81,13 @@ public class Grid {
 	    	System.out.println("");
 	    }
 	    
-	    public boolean CheckPlace(Vector3 vek1,Vector3 vek2)
+	    public boolean CheckPlace(Vector3 vekA,Vector3 vekB)
 	    {
+	    	//Fake copy
+	    	
+	    	Vector3 vek1 = new Vector3(vekA.x,vekA.y,vekA.z);
+	    	Vector3 vek2 = new Vector3(vekB.x,vekB.y,vekB.z);
+	    	
 	    	//convert to grid coordinate
 	    	vek1.Multiply(2);
 	    	vek2.Multiply(2);
@@ -100,8 +105,12 @@ public class Grid {
 	    		else if(gate.y!=0) vek1.y+=sum/2;
 	    		else if(gate.z!=0) vek1.z+=sum/2;
 	    	}
+	    	System.out.println("Gate: " + vek1.x + vek1.y + (vek1.z+2));
+	    	if(!grid[vek1.x][vek1.y][vek1.z+2]) System.out.println("Gate is closed         [Gate]");
 	    	
 	    	return grid[vek1.x][vek1.y][vek1.z+2];
+	    	
+	    	
 	    	
 	    }
 	    
@@ -113,7 +122,26 @@ public class Grid {
 	    	
 	    	if(!CheckPlace(current,vek)) return false;
 	    		
+	    	
 	    	return true;
+	    }
+	    
+	    public void AddRoom(Vector3 vek)
+	    {
+	    	grid[vek.x*2-1][vek.y*2-1][vek.z*2-1] = !grid[vek.x*2-1][vek.y*2-1][vek.z*2-1];
+	    	
+	    }
+	    
+	    public boolean isRoom(Vector3 vek)
+	    {
+	    	if(!grid[vek.x*2-1][vek.y*2-1][vek.z*2-1]) System.out.println("here is room     <-------");
+	    	return grid[vek.x*2-1][vek.y*2-1][vek.z*2-1];
+	    }
+	    
+	    public void CloseDoor(Vector3 vek)
+	    {
+	    	
+	    	
 	    }
 
 
