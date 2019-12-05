@@ -10,16 +10,19 @@ public class PathFinder {
 		ReadFile r = new ReadFile();
 		Grid grid = Grid.getInstance();
 		Seeker seeker = new Seeker();
-		grid.CreateGrid();
+		Path path = new Path();
 		
+		grid.CreateGrid();
+		r.openFile();
+		r.Read();
+		r.CloseFile();
 		
 		seeker.SeekerLoop();
+		path.GeneratePath();
 		
-		//r.openFile();
-		//r.Read();
-		//r.CloseFile();
-		//grid.CreateGrid();
-		//grid.CheckPlace(new Vector3(1,1,0),new Vector3(1,2,0));
+		
+		//grid.DrawGrid();
+		
 		
 	}
 }

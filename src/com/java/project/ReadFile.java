@@ -6,12 +6,12 @@ import java.util.*;
 public class ReadFile {
 
 	Scanner x;
-	
+	Grid grid = Grid.getInstance();
 	
 	public void openFile()
 	{
 		try {
-			x = new Scanner(new File("D:\\Documents\\Code\\EclipseWorkspace\\SpaceStation\\src\\com\\java\\project\\DoorList.txt"));
+			x = new Scanner(new File("D:\\Documents\\EclipseWorkspace\\SpaceStation\\src\\com\\java\\project\\DoorList.txt"));
 		}
 		catch(Exception e) {
 			System.out.println("file not found");
@@ -30,6 +30,7 @@ public class ReadFile {
 			Vector3 v1 = converter.CheckPattern(a);
 			Vector3 v2 = converter.CheckPattern(b);
 			
+			grid.CloseGate(v1,v2);
 			System.out.println("v1: " + v1.x + v1.y + v1.z + " v2: " + v2.x + v2.y + v2.z);
 		}
 		

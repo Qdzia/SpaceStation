@@ -26,8 +26,10 @@ public class Seeker {
 		//Add node to open
 		Room ini = new Room(3);
 		Room node = new Room(3,3,3,ini);
+		grid.node = node;
 		open.add(node);
 		Room target = new Room(1,1,1,ini);
+		grid.target = target;
 		
 	//Main loop starts
 		Room current = node;
@@ -81,7 +83,12 @@ public class Seeker {
 			}
 				
 				
-			if(current.vek.x == target.vek.x && current.vek.y == target.vek.y && current.vek.z == target.vek.z) end= false;		
+			if(current.vek.x == target.vek.x && current.vek.y == target.vek.y && current.vek.z == target.vek.z)
+			{
+				System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
+				grid.target = current;
+				end= false;
+			}		
 			ob.sort(open);
 			printArray(open);
 			petla++;

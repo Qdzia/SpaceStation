@@ -21,6 +21,8 @@ public class Grid {
 	    int size = 2*gridSize+1;
     	boolean[][][] grid = new boolean[size][size][size];
     	
+    	Room node;
+    	Room target;
     	
 	    public void CreateGrid() 
 		{
@@ -83,35 +85,12 @@ public class Grid {
 	    
 	    public boolean CheckPlace(Vector3 vekA,Vector3 vekB)
 	    {
-	    	//Fake copy
+	    	Vector3 gate = FindGate(vekA,vekB);
 	    	
-	    	Vector3 vek1 = new Vector3(vekA.x,vekA.y,vekA.z);
-	    	Vector3 vek2 = new Vector3(vekB.x,vekB.y,vekB.z);
+	    	if(!grid[gate.x][gate.y][gate.z]) System.out.println("Gate is closed         [Gate]");
 	    	
-	    	//convert to grid coordinate
-	    	vek1.Multiply(2);
-	    	vek2.Multiply(2);
-	    	vek1.Minus(1);
-	    	vek2.Minus(1);
-	    	
-	    	Vector3 gate = vek2.SubVector(vek2,vek1);
-	    	
-	    	//Calculate gate coordinate
-	    	int sum = gate.Sum();
-	    	
-	    	if(sum==2 ||sum ==-2) 
-	    	{
-	    		if(gate.x!=0) vek1.x+=sum/2;
-	    		else if(gate.y!=0) vek1.y+=sum/2;
-	    		else if(gate.z!=0) vek1.z+=sum/2;
-	    	}
-	    	System.out.println("Gate: " + vek1.x + vek1.y + (vek1.z+2));
-	    	if(!grid[vek1.x][vek1.y][vek1.z+2]) System.out.println("Gate is closed         [Gate]");
-	    	
-	    	return grid[vek1.x][vek1.y][vek1.z+2];
-	    	
-	    	
-	    	
+	    	return grid[gate.x][gate.y][gate.z];
+	    
 	    }
 	    
 	    public boolean CheckBorders(Vector3 current,Vector3 vek)
@@ -138,9 +117,42 @@ public class Grid {
 	    	return grid[vek.x*2-1][vek.y*2-1][vek.z*2-1];
 	    }
 	    
-	    public void CloseDoor(Vector3 vek)
+	    public Vector3 FindGate(Vector3 vekA,Vector3 vekB)
 	    {
+	    	//Fake copy
 	    	
+	    	Vector3 vek1 = new Vector3(vekA.x,vekA.y,vekA.z);
+	    	Vector3 vek2 = new Vector3(vekB.x,vekB.y,vekB.z);
+	    	
+	    	Vector3 gate = vek2.SubVector(vek2,vek1);
+	    	
+	    	//Calculate gate coordinate
+	    	int sum = gate.Sum();
+	    	
+	    	if(sum==1 ||sum ==-1) 
+	    	{
+	    		vek1.x = vek1.x*2-1;
+	    		vek1.y = vek1.y*2-1;
+	    		vek1.z = vek1.z*2-1;
+	    		
+	    		if(gate.x!=0) vek1.x+=sum;
+	    		else if(gate.y!=0) vek1.y+=sum;
+	    		else if(gate.z!=0) vek1.z+=sum;
+	    			
+	    	}
+	    	
+	    	
+	    	System.out.println("Gate: " + vek1.x + vek1.y + vek1.z);
+	    	
+	    	return vek1;
+	    	
+	    }
+	    
+	    public void CloseGate(Vector3 vekA,Vector3 vekB)
+	    {
+	    	Vector3 gate = FindGate(vekA,vekB);
+	    	
+	    	grid[gate.x][gate.y][gate.z] = false;
 	    	
 	    }
 
