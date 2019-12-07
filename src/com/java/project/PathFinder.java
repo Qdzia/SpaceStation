@@ -10,7 +10,7 @@ public class PathFinder {
 		ReadFile r = new ReadFile();
 		Grid grid = Grid.getInstance();
 		Seeker seeker = new Seeker();
-		Path path = new Path();
+		
 		
 		grid.CreateGrid();
 		r.openFile();
@@ -18,7 +18,7 @@ public class PathFinder {
 		r.CloseFile();
 		
 		seeker.SeekerLoop();
-		path.GeneratePath();
+		
 		
 		
 		//grid.DrawGrid();

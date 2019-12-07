@@ -11,7 +11,7 @@ public class ReadFile {
 	public void openFile()
 	{
 		try {
-			x = new Scanner(new File("D:\\Documents\\EclipseWorkspace\\SpaceStation\\src\\com\\java\\project\\DoorList.txt"));
+			x = new Scanner(new File("D:\\Documents\\Code\\EclipseWorkspace\\SpaceStation\\src\\com\\java\\project\\DoorList.txt"));
 		}
 		catch(Exception e) {
 			System.out.println("file not found");

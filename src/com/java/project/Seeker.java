@@ -10,6 +10,7 @@ public class Seeker {
 	HeapSort ob = new HeapSort();
 	Grid grid = Grid.getInstance();
 	Vector3 cal = new Vector3(0,0,0);
+	Path path = new Path();
 	
 	public void SeekerLoop()
 	{
@@ -86,7 +87,7 @@ public class Seeker {
 			if(current.vek.x == target.vek.x && current.vek.y == target.vek.y && current.vek.z == target.vek.z)
 			{
 				System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
-				grid.target = current;
+				path.GeneratePath(current);
 				end= false;
 			}		
 			ob.sort(open);
