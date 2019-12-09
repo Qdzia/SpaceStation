@@ -7,11 +7,13 @@ public class ReadFile {
 
 	Scanner x;
 	Grid grid = Grid.getInstance();
+	LinkedList<String> gates = new LinkedList<String>();
 	
-	public void openFile()
+	
+	public void openFile(String path)
 	{
 		try {
-			x = new Scanner(new File("D:\\Documents\\Code\\EclipseWorkspace\\SpaceStation\\src\\com\\java\\project\\DoorList.txt"));
+			x = new Scanner(new File(path));
 		}
 		catch(Exception e) {
 			System.out.println("file not found");
@@ -39,5 +41,33 @@ public class ReadFile {
 	public void CloseFile()
 	{
 		x.close();
+	}
+	
+	public void listFilesForFolder(final File folder) {
+	    for (final File fileEntry : folder.listFiles()) {
+	        if (fileEntry.isDirectory()) {
+	            listFilesForFolder(fileEntry);
+	        } else {
+	        	gates.add(fileEntry.getAbsolutePath());
+	            System.out.println(fileEntry.getName());
+	        }
+	    }
+	}
+	
+	public void LoadFile()
+	{
+		Scanner sc = new Scanner(System.in); 
+		
+		System.out.println("Podaj œcie¿kê dostêpu do plików: ");
+		String directory = sc.next();
+		
+		
+		final File folder = new File(directory);
+		
+		//D:\\Documents\\Code\\SpaceStation\\Gates
+		listFilesForFolder(folder);
+		
+		sc.close();
+		
 	}
 }
