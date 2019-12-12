@@ -25,12 +25,11 @@ public class Seeker {
 		dir[5]= new Vector3(0,0,1);
 		
 		//Add node to open
-		Room ini = new Room(3);
-		Room node = new Room(3,3,3,ini);
+		Room node = grid.node;
 		grid.node = node;
 		open.add(node);
-		Room target = new Room(1,1,1,ini);
-		grid.target = target;
+		Room target = grid.target;
+		
 		
 	//Main loop starts
 		Room current = node;
@@ -49,7 +48,7 @@ public class Seeker {
 			open.remove(0);
 			close.add(current);
 			ob.sort(open);
-			grid.AddRoom(current.vek);
+			//grid.AddRoom(current.vek);
 			
 	    	   
 	    	//Checking neighbor fields
@@ -71,7 +70,7 @@ public class Seeker {
 					if(isInList(pos,open))
 					{			
 								int num = getRoomOfVec(pos);
-								if(open.get(num).toStartPoint > current.toStartPoint+1) 
+								if(open.get(num).s_cost > current.s_cost+1) 
 									open.get(num).tail = current;
 					}
 					else
@@ -87,6 +86,7 @@ public class Seeker {
 			if(current.vek.x == target.vek.x && current.vek.y == target.vek.y && current.vek.z == target.vek.z)
 			{
 				System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
+				grid.target = current;
 				path.GeneratePath(current);
 				end= false;
 			}		
@@ -113,7 +113,7 @@ public class Seeker {
         System.out.println();
         
         for (int i=0; i<n; ++i) 
-            System.out.print(list.get(i).toFinishPoint+"  "); 
+            System.out.print(list.get(i).e_cost+"  "); 
         System.out.println();
     }
 	

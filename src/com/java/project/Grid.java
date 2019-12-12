@@ -1,5 +1,6 @@
 package com.java.project;
 
+import java.util.Scanner;
 
 public class Grid {
 	
@@ -21,8 +22,8 @@ public class Grid {
 	    int size = 2*gridSize+1;
     	boolean[][][] grid = new boolean[size][size][size];
     	
-    	Room node;
-    	Room target;
+    	public Room node;
+    	public Room target;
     	
 	    public void CreateGrid() 
 		{
@@ -156,5 +157,31 @@ public class Grid {
 	    	
 	    }
 
-
+	    public void SetParameters()
+	    {
+	    	Scanner sc = new Scanner(System.in); 
+			
+			System.out.println("Podaj punkt startu i koñca: ");
+			int[] a = new int[6];
+			try {
+				
+				for(int i = 0;i<6;i++) a[i] = sc.nextInt();
+			
+			}catch(Exception e) {
+				System.out.println("Niepoprawy vektor" + e);
+			}
+			sc.close();
+			
+			for(int i = 0;i<6;i++) {
+				if(a[i]>gridSize || a[i]<1)
+					throw new IllegalArgumentException("To ten sam wektor mistrzu!");
+			}
+			
+			if(a[0]==a[3] && a[1]==a[4] && a[2]==a[5])
+				throw new IllegalArgumentException("To ten sam wektor mistrzu!");
+			
+			node = new Room(a[0],a[1],a[2]);
+			target = new Room(a[3],a[4],a[5]);
+			
+	    }
 }

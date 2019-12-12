@@ -1,8 +1,9 @@
 package com.java.project;
 
 public class Room {
-	public int toStartPoint;
-	public int toFinishPoint;
+	
+	public int s_cost;
+	public int e_cost;
 	public int value;
 	public Room tail;
 	public Vector3 vek;
@@ -12,21 +13,28 @@ public class Room {
 		this.vek = new Vector3(x,y,z);
 		this.tail = tail;
 		Calculate();
+		Grid.getInstance().grid[x*2-1][y*2-1][z*2-1]= false;
 		
 	}
 	
-	public Room(int inf) {
-		this.vek = new Vector3(inf,inf,inf);
+	public Room(int x,int y,int z) {
+		this.vek = new Vector3(x,y,z);
 		this.tail = null;
-		this.toStartPoint = -1;
-		this.toFinishPoint = vek.Sum();
+		this.s_cost = 0;
+		this.e_cost = 0;
 		this.value = 100;
+		Grid.getInstance().grid[x*2-1][y*2-1][z*2-1]= false;
 	}
 	
 	void DistanceTSP()
 	{
-		if(tail.toStartPoint == -1) toStartPoint =1;
-		else toStartPoint = tail.toStartPoint +1;
+		if(tail.s_cost == -1) s_cost =1;
+		else s_cost = tail.s_cost +1;
+	}
+	
+	void DistanceTFP()
+	{
+		e_cost = Math.abs(Grid.getInstance().target.vek.Sum() - vek.Sum());
 	}
 	
 	public void Calculate()
@@ -34,8 +42,8 @@ public class Room {
 		if(tail!=null) DistanceTSP();
 		else System.out.println("Calculate! Tail not set");	
 		
-		toFinishPoint = vek.Sum();
-		value = toFinishPoint + toStartPoint;
+		DistanceTFP();
+		value = e_cost + s_cost;
 	}
 	
 }

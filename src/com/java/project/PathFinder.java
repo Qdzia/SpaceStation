@@ -7,6 +7,7 @@ public class PathFinder {
 	public static void main(String[] args) {
 	
 		ReadFile r = new ReadFile();
+		Printer printer = new Printer();
 		
 		r.LoadFile();
 		
@@ -21,7 +22,7 @@ public class PathFinder {
 			r.CloseFile();
 			
 			seeker.SeekerLoop();
-			grid.DrawGrid();
+			printer.DrawPath();
 			
 		}
 

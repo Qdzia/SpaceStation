@@ -16,7 +16,7 @@ public class ReadFile {
 			x = new Scanner(new File(path));
 		}
 		catch(Exception e) {
-			System.out.println("file not found");
+			System.out.println("Nie znaleziono pliku" + e);
 		}
 	}
 	
@@ -66,6 +66,7 @@ public class ReadFile {
 		
 		//D:\\Documents\\Code\\SpaceStation\\Gates
 		listFilesForFolder(folder);
+		grid.SetParameters();
 		
 		sc.close();
 		

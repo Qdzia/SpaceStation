@@ -30,18 +30,19 @@ public class HeapSort {
 	    // an index in arr[]. n is size of heap 
 	    void heapify(LinkedList<Room> list, int n, int i) 
 	    { 
+	    	
 	        int largest = i;  // Initialize largest as root 
 	        int l = 2*i + 1;  // left = 2*i + 1 
 	        int r = 2*i + 2;  // right = 2*i + 2 
-	  
+	        
 	        // If left child is larger than root 
 	        if (l < n && (list.get(l).value > list.get(largest).value 
-	        		|| list.get(l).value == list.get(largest).value &&  list.get(l).toFinishPoint > list.get(largest).toFinishPoint))
+	        		|| list.get(l).value == list.get(largest).value &&  list.get(l).e_cost > list.get(largest).e_cost))
 	            largest = l; 
 	      
 	        // If right child is larger than largest so far 
 		        if (r < n && (list.get(r).value > list.get(largest).value 
-		        		|| list.get(r).value == list.get(largest).value && list.get(r).toFinishPoint > list.get(largest).toFinishPoint))
+		        		|| list.get(r).value == list.get(largest).value && list.get(r).e_cost > list.get(largest).e_cost))
 		            largest = r; 
 	        
 	        // If largest is not root 
