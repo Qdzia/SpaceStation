@@ -57,19 +57,18 @@ public class ReadFile {
 	
 	public void LoadFile()
 	{
-		//Scanner sc = new Scanner(System.in); 
+		Scanner sc = new Scanner(System.in); 
 		
-		//System.out.println("Podaj œcie¿kê dostêpu do plików: ");
-		//String directory = sc.next();
-		String directory = "D:\\Documents\\Code\\SpaceStation\\Gates";
+		System.out.println("Podaj œcie¿kê dostêpu do plików: ");
+		String directory = sc.next();
+		//String directory = "D:\\Documents\\Code\\SpaceStation\\Gates";
 		
 		final File folder = new File(directory);
-		
-		//D:\\Documents\\Code\\SpaceStation\\Gates
+	
 		listFilesForFolder(folder);
 		grid.SetParameters();
 		
-		//sc.close();
+		sc.close();
 		
 	}
 

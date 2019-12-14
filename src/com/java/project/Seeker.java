@@ -10,7 +10,6 @@ public class Seeker {
 	HeapSort ob = new HeapSort();
 	Grid grid = Grid.getInstance();
 	Vector3 cal = new Vector3(0,0,0);
-	Path path = new Path();
 	Printer printer = Printer.getInstance();
 	int limitLoop = grid.gridSize*grid.gridSize*grid.gridSize;
 	

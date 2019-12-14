@@ -2,6 +2,7 @@ package com.java.project;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Printer {
@@ -19,130 +20,111 @@ public class Printer {
 	    }
     
 	Grid grid = Grid.getInstance();
-	public String currentRooms,checkedRooms,encounteredGates,gatesList;
+	public String currentRooms,checkedRooms,encounteredGates,gatesList,pathImage,path,raport;
 	public List<String> filenames = new ArrayList<String>();
+	String line;
+	
 
 	public void Initialize()
 	{
-		currentRooms = "Current Rooms List: \n";
-		checkedRooms = "Checked Rooms List: \n";
-		encounteredGates = "Encountered Gates List: \n";
-		gatesList = "Read Gates: \n";
+		line = "==";
+		line = line.repeat(grid.gridSize);
+		path="1.Shortest Path is: \n";
+		currentRooms = "2.Current Rooms List: \n";
+		checkedRooms = "3.Checked Rooms List: \n";
+		gatesList = "4.Readed Gates: \n";
+		encounteredGates = "5.Encountered Gates List: \n";
+		pathImage = "6.Image of Path: \n";
 		
 	}
+	
 	public void WriteToFile(String fileName) throws IOException 
 	{
 		fileName = "Output_"+fileName;
 		 FileWriter fileWriter = new FileWriter(fileName);
 		 PrintWriter printWriter = new PrintWriter(fileWriter);
-		 printWriter.println(gatesList);
-		 printWriter.println(encounteredGates);
-		 printWriter.println(currentRooms);
-		 printWriter.println(checkedRooms);
+		 printWriter.println(raport);
 		 printWriter.close();
 	}
 	
 	public void Print() throws IOException
-	{
-		System.out.println(gatesList);
-		System.out.println(encounteredGates);
-		System.out.println(currentRooms); 	
-		System.out.println(checkedRooms); 
+	{	
 		DrawPath();
-		for(String el : filenames) System.out.println(el);
-		
+		raport = String.format("%s\n%s\n%s\n%s\n%s\n%s\n",path,currentRooms,checkedRooms,gatesList,encounteredGates,pathImage);
+		System.out.println(raport);
 		WriteToFile(filenames.get(0));
 		filenames.remove(0);
 		
 	}
+	
 	public void DrawPath(Room current)
 	{
-		String way="Shortes Path is: \n";
-		//Room current = target;
-		
 		while(current.tail!=null)
 		{	
-			way += String.format("-> %d, %d, %d \n",current.vek.x,current.vek.y, current.vek.z);
+			path += String.format("-> %d, %d, %d \n",current.vek.x,current.vek.y, current.vek.z);
 			current = current.tail;
 		}
-		way += String.format("-> %d, %d, %d \n",grid.node.vek.x,grid.node.vek.y, grid.node.vek.z);
+		path += String.format("-> %d, %d, %d \n",grid.node.vek.x,grid.node.vek.y, grid.node.vek.z);
 		
-		System.out.println(way);
 	}
-
 	
 	public void DrawGrid()
 	{	
-		int size = Grid.getInstance().size;
-		boolean[][][] grid= Grid.getInstance().grid;
+		int size = grid.size;
+		boolean[][][] ar= Grid.getInstance().grid;
 
-    	for(int k=0;k<size;k++) {
-    		for(int j=0;j<size;j++) {
-    			for(int i =0;i<size;i++) {
-    				if(grid[i][j][k]==true) System.out.print("  "); 
-    				else System.out.print("# ");
-    			
-    			}
-    			System.out.println("");
-    		}
-    		
-    		System.out.println("===============================================[ "+ k + " ]====");
-    	}
-    	
-    	System.out.println("");
-		
+		PrintArray(0,size,1,ar,line);
 	}
 	
 	public void DrawRooms()
 	{	
-		int size = Grid.getInstance().size;
+		int size = grid.size;
 		boolean[][][] ar= Grid.getInstance().grid;
 
-    	for(int k=1;k<size-1;k+=2) {
-    		for(int j=1;j<size-1;j+=2) {
-    			for(int i =1;i<size-1;i+=2) {
-    				if(ar[i][j][k]==true) System.out.print("0 "); 
-    				else System.out.print("# ");
-    			
-    			}
-    			System.out.println("");
-    		}
-    		
-    		System.out.println("===============================================[ "+ k + " ]====");
-    	}
-    	
-    	System.out.println("");
+		PrintArray(1,size,2,ar,line);
 		
 	}
 	
 	public void DrawPath()
 	{	
-		int gridSize = Grid.getInstance().gridSize;
+		int gridSize = grid.gridSize;
 		boolean[][][] ar= new boolean[gridSize][gridSize][gridSize];
-		Room last = Grid.getInstance().target;
+		Room last = grid.target;
 		
-		if(last.tail == null) throw new IllegalArgumentException("Ÿle odczytano ostatni pokój");
+		if(last.tail == null) throw new IllegalArgumentException("Unable to read tail");
+		
+		for(int k=0;k<gridSize;k++) {
+    		for(int j=0;j<gridSize;j++) {
+    			Arrays.fill(ar[k][j], true);
+    		}
+		}
 		
 		while(last.tail != null)
 		{
-			ar[last.vek.x-1][last.vek.y-1][last.vek.z-1]=true;
+			ar[last.vek.x-1][last.vek.y-1][last.vek.z-1]=false;
 			last=last.tail;
 		}
-		for(int k=0;k<gridSize;k++) {
-    		for(int j=0;j<gridSize;j++) {
-    			for(int i =0;i<gridSize;i++) {
-    				if(ar[i][j][k]==true) System.out.print("0 "); 
-    				else System.out.print("# ");
-    			
+		
+		PrintArray(0,gridSize,1,ar,line);
+		
+	}
+	
+	void PrintArray(int ini,int n,int hop,boolean[][][] ar,String line)
+	{
+		
+		for(int k=ini;k<n;k+=hop) {
+    		for(int j=ini;j<n;j+=hop) {
+    			for(int i =ini;i<n;i+=hop) {
+    				if(ar[i][j][k]==true) pathImage += "  "; 
+    				else pathImage += "# ";
     			}
-    			System.out.println("");
+    			pathImage += "\n";
     		}
     		
-    		System.out.println("===============================================[ "+ k + " ]====");
+    		pathImage += line;
+    		pathImage += "==[ "+ k + " ]==\n";
     	}
-    	
-    	System.out.println("");
-		
+		pathImage += "\n";
 	}
 	
 

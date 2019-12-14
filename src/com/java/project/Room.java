@@ -33,8 +33,11 @@ public class Room {
 	}
 	
 	void DistanceTFP()
-	{
-		e_cost = Math.abs(Grid.getInstance().targetVek.Sum() - vek.Sum());
+	{	Vector3 tar = Grid.getInstance().targetVek;
+		e_cost = 0;
+		e_cost += Math.abs(tar.x-vek.x);
+		e_cost += Math.abs(tar.y-vek.y);
+		e_cost += Math.abs(tar.z-vek.z);
 	}
 	
 	public void Calculate()

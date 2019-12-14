@@ -18,9 +18,9 @@ public class Grid {
 	    }
 	   
 	  //Rest of code
-	    int gridSize = 10;
-	    int size = 2*gridSize+1;
-    	boolean[][][] grid = new boolean[size][size][size];
+	    int gridSize;
+	    int size; 
+    	boolean[][][] grid;
     	
     	
     	public Room node;
@@ -135,28 +135,37 @@ public class Grid {
 	    public void SetParameters()
 	    {
 	    	Scanner sc = new Scanner(System.in); 
+	    	System.out.println("Set size of cube[3-26]: ");
 			
-			System.out.println("Podaj punkt startu i koñca: ");
+			
 			int[] a = new int[6];
 			try {
-				
+				gridSize = sc.nextInt();
+				System.out.println("Set start point and target: ");
 				for(int i = 0;i<6;i++) a[i] = sc.nextInt();
 			
 			}catch(Exception e) {
-				System.out.println("Niepoprawy vektor" + e);
+				System.out.println("invalid vector" + e);
 			}
 			sc.close();
+			size = 2*gridSize+1;
+			grid = new boolean[size][size][size];
 			
 			for(int i = 0;i<6;i++) {
 				if(a[i]>gridSize || a[i]<1)
-					throw new IllegalArgumentException("To ten sam wektor mistrzu!");
+					throw new IllegalArgumentException("invalid vector");
 			}
 			
 			if(a[0]==a[3] && a[1]==a[4] && a[2]==a[5])
-				throw new IllegalArgumentException("To ten sam wektor mistrzu!");
+				throw new IllegalArgumentException("Its the same vector Master!");
+			
+			if(gridSize <0 || gridSize >26)
+				throw new IllegalArgumentException("Wrong Size of grid");
+			
 			
 			node = new Room(a[0],a[1],a[2]);
 			targetVek = new Vector3(a[3],a[4],a[5]);
+			
 			
 	    }
 }
