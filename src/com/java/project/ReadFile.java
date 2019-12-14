@@ -8,6 +8,7 @@ public class ReadFile {
 	Scanner x;
 	Grid grid = Grid.getInstance();
 	LinkedList<String> gates = new LinkedList<String>();
+	Printer printer = Printer.getInstance();
 	
 	
 	public void openFile(String path)
@@ -33,7 +34,7 @@ public class ReadFile {
 			Vector3 v2 = converter.CheckPattern(b);
 			
 			grid.CloseGate(v1,v2);
-			System.out.println("v1: " + v1.x + v1.y + v1.z + " v2: " + v2.x + v2.y + v2.z);
+			printer.gatesList += String.format("[Gate %d%d%d : %d%d%d] \n",v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
 		}
 		
 	}
@@ -49,18 +50,18 @@ public class ReadFile {
 	            listFilesForFolder(fileEntry);
 	        } else {
 	        	gates.add(fileEntry.getAbsolutePath());
-	            System.out.println(fileEntry.getName());
+	        	printer.filenames.add(fileEntry.getName());
 	        }
 	    }
 	}
 	
 	public void LoadFile()
 	{
-		Scanner sc = new Scanner(System.in); 
+		//Scanner sc = new Scanner(System.in); 
 		
-		System.out.println("Podaj œcie¿kê dostêpu do plików: ");
-		String directory = sc.next();
-		
+		//System.out.println("Podaj œcie¿kê dostêpu do plików: ");
+		//String directory = sc.next();
+		String directory = "D:\\Documents\\Code\\SpaceStation\\Gates";
 		
 		final File folder = new File(directory);
 		
@@ -68,7 +69,8 @@ public class ReadFile {
 		listFilesForFolder(folder);
 		grid.SetParameters();
 		
-		sc.close();
+		//sc.close();
 		
 	}
+
 }

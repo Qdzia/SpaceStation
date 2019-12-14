@@ -4,7 +4,6 @@ public class Path {
 
 	Grid grid = Grid.getInstance();
 	Room node = grid.node;
-	Room target = grid.target;
 	
 	public void GeneratePath(Room current)
 	{

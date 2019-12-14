@@ -11,6 +11,8 @@ public class Seeker {
 	Grid grid = Grid.getInstance();
 	Vector3 cal = new Vector3(0,0,0);
 	Path path = new Path();
+	Printer printer = Printer.getInstance();
+	int limitLoop = grid.gridSize*grid.gridSize*grid.gridSize;
 	
 	public void SeekerLoop()
 	{
@@ -28,15 +30,13 @@ public class Seeker {
 		Room node = grid.node;
 		grid.node = node;
 		open.add(node);
-		Room target = grid.target;
+		Vector3 targetVek = grid.targetVek;
 		
 		
 	//Main loop starts
 		Room current = node;
 		Vector3 pos;
 		
-		grid.grid[1][1][4] = false;
-		grid.grid[1][2][3] = false;
 		
 		//security
 		int petla = 0;    
@@ -55,13 +55,11 @@ public class Seeker {
 			pos = new Vector3(0,0,0);
 		    pos = pos.EqlVector(pos,  current.vek);
 		    
-		    System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
+		    printer.currentRooms += String.format("-> %d, %d, %d \n",current.vek.x,current.vek.y, current.vek.z);
 		    
 			for(int i = 0;i<6;i++) 
 			{
 				pos = cal.AddVector(pos, dir[i]);
-				
-				System.out.println("Position: " + pos.x + pos.y + pos.z);
 						
 				//Check is valid or is in close list
 				if( grid.CheckBorders(current.vek,pos) && grid.isRoom(pos) )
@@ -76,30 +74,30 @@ public class Seeker {
 					else
 					{
 						open.add(new Room(pos.x,pos.y,pos.z,current));
-						System.out.println("Dodano:   " + pos.x + pos.y + pos.z);
 					}
 				}		
 				pos = cal.SubVector(pos, dir[i]);
 			}
 				
 				
-			if(current.vek.x == target.vek.x && current.vek.y == target.vek.y && current.vek.z == target.vek.z)
+			if(current.vek.x == targetVek.x && current.vek.y == targetVek.y && current.vek.z == targetVek.z)
 			{
-				System.out.println("current: " + current.vek.x + current.vek.y + current.vek.z);
 				grid.target = current;
-				path.GeneratePath(current);
+				printer.DrawPath(current);
 				end= false;
 			}		
 			ob.sort(open);
-			printArray(open);
 			petla++;
-		    if(petla > 27) end= false;
-		    System.out.println("========================= " + petla);
-			
+		    if(petla > limitLoop) end= false;
 		}
-
-	       	
-		System.out.println("End of Program");   	
+		
+		try {
+		printer.Print();
+		}catch(Exception e) {
+			System.out.println("Nie uda³o siê zapisaæ do pliku" + e);
+		}
+		
+		System.out.println("End of Program\n");   	
 	} 
 				
 			
@@ -124,7 +122,7 @@ public class Seeker {
 		    if(room.vek.x == vek.x && room.vek.y == vek.y && room.vek.z == vek.z)
 			    return true;
 		}
-		System.out.println("Not in list");
+		printer.checkedRooms += String.format("-> %d, %d, %d \n", vek.x,vek.y,vek.z);
 		return false;
 	}
 	

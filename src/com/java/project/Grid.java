@@ -18,12 +18,14 @@ public class Grid {
 	    }
 	   
 	  //Rest of code
-	    int gridSize = 5;
+	    int gridSize = 10;
 	    int size = 2*gridSize+1;
     	boolean[][][] grid = new boolean[size][size][size];
     	
+    	
     	public Room node;
     	public Room target;
+    	public Vector3 targetVek;
     	
 	    public void CreateGrid() 
 		{
@@ -65,30 +67,13 @@ public class Grid {
 	    	
 		}
 	    
-	    public void DrawGrid() 
-	    {
-	    	
-	    	for(int k=0;k<size;k++) {
-	    		for(int j=0;j<size;j++) {
-	    			for(int i =0;i<size;i++) {
-	    				if(grid[i][j][k]==true) System.out.print("  "); 
-	    				else System.out.print("# ");
-	    			
-	    			}
-	    			System.out.println("");
-	    		}
-	    		
-	    		System.out.println("===============================================[ "+ k + " ]====");
-	    	}
-	    	
-	    	System.out.println("");
-	    }
 	    
 	    public boolean CheckPlace(Vector3 vekA,Vector3 vekB)
 	    {
 	    	Vector3 gate = FindGate(vekA,vekB);
 	    	
-	    	if(!grid[gate.x][gate.y][gate.z]) System.out.println("Gate is closed         [Gate]");
+	    	if(!grid[gate.x][gate.y][gate.z]) 
+	    		Printer.getInstance().encounteredGates += String.format("#: %d%d%d \n",gate.x,gate.y, gate.z);
 	    	
 	    	return grid[gate.x][gate.y][gate.z];
 	    
@@ -106,15 +91,8 @@ public class Grid {
 	    	return true;
 	    }
 	    
-	    public void AddRoom(Vector3 vek)
-	    {
-	    	grid[vek.x*2-1][vek.y*2-1][vek.z*2-1] = !grid[vek.x*2-1][vek.y*2-1][vek.z*2-1];
-	    	
-	    }
-	    
 	    public boolean isRoom(Vector3 vek)
 	    {
-	    	if(!grid[vek.x*2-1][vek.y*2-1][vek.z*2-1]) System.out.println("here is room     <-------");
 	    	return grid[vek.x*2-1][vek.y*2-1][vek.z*2-1];
 	    }
 	    
@@ -141,9 +119,6 @@ public class Grid {
 	    		else if(gate.z!=0) vek1.z+=sum;
 	    			
 	    	}
-	    	
-	    	
-	    	System.out.println("Gate: " + vek1.x + vek1.y + vek1.z);
 	    	
 	    	return vek1;
 	    	
@@ -181,7 +156,7 @@ public class Grid {
 				throw new IllegalArgumentException("To ten sam wektor mistrzu!");
 			
 			node = new Room(a[0],a[1],a[2]);
-			target = new Room(a[3],a[4],a[5]);
+			targetVek = new Vector3(a[3],a[4],a[5]);
 			
 	    }
 }

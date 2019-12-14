@@ -7,14 +7,17 @@ public class PathFinder {
 	public static void main(String[] args) {
 	
 		ReadFile r = new ReadFile();
-		Printer printer = new Printer();
+		Grid grid = Grid.getInstance();
+		Printer printer = Printer.getInstance();
+		
 		
 		r.LoadFile();
 		
 		for (String path : r.gates) 
 		{
-			Grid grid = Grid.getInstance();
+			
 			Seeker seeker = new Seeker();
+			printer.Initialize();
 			
 			grid.CreateGrid();
 			r.openFile(path);
@@ -22,7 +25,7 @@ public class PathFinder {
 			r.CloseFile();
 			
 			seeker.SeekerLoop();
-			printer.DrawPath();
+			
 			
 		}
 

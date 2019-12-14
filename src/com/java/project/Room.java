@@ -34,7 +34,7 @@ public class Room {
 	
 	void DistanceTFP()
 	{
-		e_cost = Math.abs(Grid.getInstance().target.vek.Sum() - vek.Sum());
+		e_cost = Math.abs(Grid.getInstance().targetVek.Sum() - vek.Sum());
 	}
 	
 	public void Calculate()
